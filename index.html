@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Maps Link Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 8px;
+            cursor: pointer;
+        }
+        iframe {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h2>Google Maps Link Generator</h2>
+    
+    <label for="latitude">Latitude:</label>
+    <input type="text" id="latitude" placeholder="Enter latitude (e.g., 31.2679889)" />
+
+    <label for="longitude">Longitude:</label>
+    <input type="text" id="longitude" placeholder="Enter longitude (e.g., 75.582446)" />
+
+    <button onclick="generateLink()">Generate Link</button>
+
+    <label for="generatedLink">Generated Link:</label>
+    <input type="text" id="generatedLink" readonly />
+
+    <button onclick="copyToClipboard()">Copy Link</button>
+
+    <h2>Embedded Google Maps:</h2>
+    <iframe id="googleMap" frameborder="0" style="border:0" allowfullscreen></iframe>
+
+    <script>
+        function generateLink() {
+            const latitude = document.getElementById("latitude").value;
+            const longitude = document.getElementById("longitude").value;
+
+            const link = `https://www.google.com/maps/place/${encodeURIComponent(latitude + 'N')}+${encodeURIComponent(longitude + 'E')}/@${latitude},${longitude},17z/data=!3m1!4b1!4m4!3m3!8m2!3d${latitude}!4d${longitude}?entry=ttu`;
+
+            document.getElementById("generatedLink").value = link;
+
+            // Update the embedded map
+            document.getElementById("googleMap").src = `https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d0!2d${longitude}!3d${latitude}!1m5!1m1!1s(${latitude},+${longitude})!2m2!1d17!2d0!3m3!1s0x0:0x0!2zNzIwLTI3LjU1!3b1!3m1!1s0x0:0x0`;
+        }
+
+        function copyToClipboard() {
+            const linkInput = document.getElementById("generatedLink");
+            linkInput.select();
+            document.execCommand("copy");
+            alert("Link copied to clipboard!");
+        }
+    </script>
+</body>
+</html>
